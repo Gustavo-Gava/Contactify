@@ -1,0 +1,39 @@
+{
+	"contacts": [
+		{
+			"id": "1",
+			"name": "John",
+			"lastname": "Doe",
+
+			"phones": [
+				{
+					"id": 1,
+					"number": "123456789"
+				},
+
+				{
+					"id": 2,
+					"number": "987654321"
+				}
+			],
+
+			"addresses": [
+				{
+					"id": 1,
+					"street": "123 Main St",
+					"city": "New York",
+					"state": "NY",
+					"zip": "12345"
+				},
+
+				{
+					"id": 2,
+					"street": "456 Main St",
+					"city": "New York",
+					"state": "NY",
+					"zip": "12345"
+				}
+			]
+		}
+	]
+}
