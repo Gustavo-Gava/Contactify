@@ -1,6 +1,6 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import Modal from "react-modal";
-import { useFieldArray, useForm } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -10,14 +10,14 @@ import { Button } from "../ui/Button";
 
 import { api } from "../../services/api";
 
-import { BsTelephone, BsPerson, BsPlus, BsMap } from "react-icons/bs";
+import { BsPerson, BsX } from "react-icons/bs";
 
-import theme from "../../styles/theme/theme";
-import * as S from "./styles";
 import { toast } from "react-toastify";
+import { PhonesInputGroup } from "./PhonesInputGroup";
+import { AddressesInputGroup } from "./AddressesInputGroup";
 
-const phoneRegExp =
-	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+import * as S from "./styles";
+import { NameInputGroup } from "./NameInputGroup";
 
 const schema = yup.object({
 	name: yup.string().required("Name is required"),
@@ -41,17 +41,12 @@ const schema = yup.object({
 	),
 });
 
-type FormData = yup.InferType<typeof schema>;
+export type NewContactFormData = yup.InferType<typeof schema>;
 
 export const AddNewContact = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { errors },
-	} = useForm<FormData>({
+	const methods = useForm<NewContactFormData>({
 		resolver: yupResolver(schema),
 		defaultValues: {
 			phones: [{ number: "", type: "" }],
@@ -59,19 +54,13 @@ export const AddNewContact = () => {
 		},
 	});
 
-	const addresses = useFieldArray({
-		control,
-		name: "addresses",
-	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = methods;
 
-	const phones = useFieldArray({
-		control,
-		name: "phones",
-	});
-
-	const onSubmit = async (data: FormData) => {
-		console.log("Data: ", data);
-
+	const onSubmit = async (data: NewContactFormData) => {
 		try {
 			await api.post("/contacts", data);
 
@@ -90,102 +79,25 @@ export const AddNewContact = () => {
 			<AddNewContactButton onClick={() => setIsModalOpen(!isModalOpen)} />
 
 			<Modal isOpen={isModalOpen} contentLabel="Modal" style={S.customStyles}>
-				<S.Form onSubmit={handleSubmit(onSubmit)}>
-					<h3>New contact</h3>
+				<FormProvider {...methods}>
+					<S.Form onSubmit={handleSubmit(onSubmit)}>
+						<S.FormHeader>
+							<h3>New contact</h3>
 
-					<S.InputGroup>
-						<S.InputGroupContent>
-							<BsPerson size={16} />
+							<S.CloseButton onClick={() => setIsModalOpen(false)}>
+								<BsX size={24} />
+							</S.CloseButton>
+						</S.FormHeader>
 
-							<Input
-								label="name"
-								placeholder="Name"
-								error={errors.name?.message}
-								{...register("name")}
-							/>
-						</S.InputGroupContent>
-					</S.InputGroup>
+						<NameInputGroup />
 
-					<S.InputGroup>
-						<S.InputGroupContent>
-							<BsTelephone size={16} />
+						<PhonesInputGroup />
 
-							<S.InputWrapper>
-								{phones.fields.map((field, index) => (
-									<Input
-										key={field.id}
-										placeholder={`Phone ${index + 1}`}
-										removeFunction={index !== 0 ? () => phones.remove(index) : undefined}
-										type="tel"
-										error={errors.phones?.[index]?.number?.message}
-										{...register(`phones.${index}.number`)}
-									/>
-								))}
-							</S.InputWrapper>
-						</S.InputGroupContent>
+						<AddressesInputGroup />
 
-						<S.InputGroupFooter>
-							<S.AddPhoneButton
-								type="button"
-								onClick={() => phones.append({ number: "", type: "" })}
-							>
-								<BsPlus size={16} />
-								Add phone number
-							</S.AddPhoneButton>
-						</S.InputGroupFooter>
-					</S.InputGroup>
-
-					<S.InputGroup>
-						<S.InputGroupContent>
-							<BsMap size={16} />
-
-							<S.InputWrapper>
-								{addresses.fields.map((field, index) => {
-									return (
-										<Fragment key={field.id}>
-											<Input
-												placeholder="Street"
-												removeFunction={index !== 0 ? () => addresses.remove(index) : undefined}
-												error={errors.addresses?.[index]?.street?.message}
-												{...register(`addresses.${index}.street`)}
-											/>
-
-											<Input
-												placeholder="City"
-												error={errors.addresses?.[index]?.city?.message}
-												{...register(`addresses.${index}.city`)}
-											/>
-
-											<Input
-												placeholder="State"
-												error={errors.addresses?.[index]?.state?.message}
-												{...register(`addresses.${index}.state`)}
-											/>
-
-											<Input
-												placeholder="Zipcode"
-												error={errors.addresses?.[index]?.zipcode?.message}
-												{...register(`addresses.${index}.zipcode`)}
-											/>
-										</Fragment>
-									);
-								})}
-							</S.InputWrapper>
-						</S.InputGroupContent>
-
-						<S.InputGroupFooter>
-							<S.AddPhoneButton
-								type="button"
-								onClick={() => addresses.append({ city: "", state: "", street: "", zipcode: "" })}
-							>
-								<BsPlus size={16} />
-								Add address
-							</S.AddPhoneButton>
-						</S.InputGroupFooter>
-					</S.InputGroup>
-
-					<Button type="submit">Save</Button>
-				</S.Form>
+						<Button type="submit">Save</Button>
+					</S.Form>
+				</FormProvider>
 			</Modal>
 		</>
 	);

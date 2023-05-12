@@ -30,6 +30,17 @@ export const Form = styled.form`
   gap: 8px;
 `
 
+export const FormHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+`
+
+export const CloseButton = styled.div`
+  cursor: pointer;
+`
+
 export const InputGroup = styled.div`
   width: 100%;
   display: flex;
