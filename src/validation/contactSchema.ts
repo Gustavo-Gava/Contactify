@@ -17,8 +17,8 @@ export const contactSchema = yup.object({
 				number: yup
 					.string()
 					.required("Phone number is required")
-					.min(18, "Phone number must be at least 10 digits")
-					.max(20, "Phone number must be at most 10 digits"),
+					.min(15, "Phone number must be at least 15 digits")
+					.max(20, "Phone number must be at most 20 digits"),
 				type: yup.string(),
 			})
 			.required("At least one phone number is required")

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineSortAscending } from "react-icons/ai";
 import { BiSortDown } from "react-icons/bi";
@@ -11,7 +11,7 @@ import { ContactInfo } from "../../components/ContactInfo";
 import { SearchInput } from "../../components/SearchInput";
 import { ContactCard } from "../../components/ContactCard";
 import { AddNewContact } from "../../components/AddNewContact";
-import ImportContactsFromGoogle from "../../components/google";
+import ImportContactsFromGoogle from "../../components/Google/index.tsx";
 
 import { api } from "../../services/api";
 import { CLIENT_ID } from "../../consts";
@@ -127,7 +127,7 @@ export const Home = () => {
 					{sortedContacts && (
 						<>
 							{Object.keys(sortedContacts).map((letter) => (
-								<>
+								<Fragment key={letter}>
 									<S.Letter>
 										<span>{letter}</span>
 									</S.Letter>
@@ -141,7 +141,7 @@ export const Home = () => {
 											/>
 										))}
 									</S.ContactsGroup>
-								</>
+								</Fragment>
 							))}
 						</>
 					)}

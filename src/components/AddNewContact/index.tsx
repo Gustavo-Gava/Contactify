@@ -17,7 +17,7 @@ import * as S from "./styles";
 import { NameInputGroup } from "./NameInputGroup";
 import { centeredModalStyles } from "../../styles/global/commonStyles";
 import { contactSchema } from "../../validation/contactSchema";
-import { createContact } from "../../api/contact/createContact";
+import { createContact } from "../../api/contact";
 
 export type NewContactFormData = yup.InferType<typeof contactSchema>;
 
@@ -64,7 +64,12 @@ export const AddNewContact = ({ refetchData }: AddNewContactProps) => {
 		<>
 			<AddNewContactButton onClick={(e) => handleAddNewContact(e)} />
 
-			<Modal isOpen={isModalOpen} contentLabel="Modal" style={centeredModalStyles}>
+			<Modal
+				isOpen={isModalOpen}
+				contentLabel="Modal"
+				style={centeredModalStyles}
+				ariaHideApp={false}
+			>
 				<FormProvider {...methods}>
 					<S.Form onSubmit={handleSubmit(onSubmit)}>
 						<S.FormHeader>

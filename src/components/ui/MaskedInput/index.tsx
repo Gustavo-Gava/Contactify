@@ -42,7 +42,7 @@ export const MaskedInput = ({ removeFunction, name, error, ...rest }: InputProps
 	return (
 		<S.Container>
 			<S.InputWrapper error={!!error}>
-				<ReactMaskedInput mask={phoneMask} className="input" name={name} {...rest} />
+				<ReactMaskedInput guide={false} mask={phoneMask} className="input" name={name} {...rest} />
 
 				{removeFunction && (
 					<S.RemoveButton onClick={removeFunction}>

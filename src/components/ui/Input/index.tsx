@@ -14,7 +14,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			<S.Container>
 				{label && <S.Label htmlFor={name}>{label}</S.Label>}
 
-				<S.InputWrapper error={!!error}>
+				<S.InputWrapper $error={!!error}>
 					<S.Input name={name} ref={ref} {...rest} />
 
 					{removeFunction && (

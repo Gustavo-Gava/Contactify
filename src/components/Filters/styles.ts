@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { Input } from "../ui/Input";
 
 interface FilterContainerProps {
-	isExpanded: boolean;
+	$isExpanded: boolean;
 }
 
 export const Container = styled.div`
@@ -30,8 +30,8 @@ export const FilterContainer = styled.form<FilterContainerProps>`
 	transition: all 0.3s;
 	overflow: hidden;
 
-	${({ isExpanded }) =>
-		isExpanded
+	${({ $isExpanded }) =>
+		$isExpanded
 			? css`
 					transition: all 0.3s;
 					max-height: 300px;
@@ -47,8 +47,8 @@ export const ChevronIcon = styled(BsChevronDown)<FilterContainerProps>`
 	width: 24px;
 	height: 24px;
 
-	${({ isExpanded }) =>
-		isExpanded
+	${({ $isExpanded }) =>
+		$isExpanded
 			? css`
 					transform: rotate(180deg);
 			  `

@@ -1,11 +1,11 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import { api } from "../services/api";
-import { Button } from "./ui/Button";
-import { CLIENT_ID, REDIRECT_URI } from "../consts";
+import { api } from "../../services/api";
+import { Button } from "../ui/Button";
+import { CLIENT_ID, REDIRECT_URI } from "../../consts";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import { googlePeopleApi } from "../../services/googlePeopleApi";
 
 interface GoogleUser {
 	access_token: string;
@@ -33,13 +33,30 @@ interface ImportContactsFromGoogleProps {
 	refetch: () => void;
 }
 
+function formatGoogleContacts(contacts: Connection[]) {
+	return contacts.map((contact: Connection) => {
+		return {
+			id: uuidv4(),
+			name: contact.names[0].displayName ?? "No name",
+			category: "No category",
+			phones: contact.phoneNumbers.map((phone) => {
+				return {
+					number: phone.value,
+					type: phone.type,
+				};
+			}),
+			addresses: [],
+		};
+	});
+}
+
 const ImportContactsFromGoogle = ({ refetch }: ImportContactsFromGoogleProps) => {
 	const [importedFromGoogle, setImportedFromGoogle] = useState(false);
 
 	const handleSuccess = async (googleUser: GoogleUser) => {
 		try {
-			const { data }: Data = await axios.get(
-				"https://people.googleapis.com/v1/people/me/connections?personFields=names,phoneNumbers",
+			const { data }: Data = await googlePeopleApi.get(
+				"/v1/people/me/connections?personFields=names,phoneNumbers",
 				{
 					headers: {
 						Authorization: `Bearer ${googleUser.access_token}`,
@@ -47,25 +64,12 @@ const ImportContactsFromGoogle = ({ refetch }: ImportContactsFromGoogleProps) =>
 				}
 			);
 
-			const contacts = data.connections.map((contact: Connection) => {
-				return {
-					id: uuidv4(),
-					name: contact.names[0].displayName ?? "No name",
-					category: "No category",
-					phones: contact.phoneNumbers.map((phone) => {
-						return {
-							number: phone.value,
-							type: phone.type,
-						};
-					}),
-					addresses: [],
-				};
-			});
-
+			const contacts = formatGoogleContacts(data.connections);
 			await Promise.all(contacts.map((contact) => api.post("/contacts", contact)));
+
 			toast.success("Contacts imported successfully!");
 			setImportedFromGoogle(true);
-			await refetch();
+			refetch();
 		} catch (error) {
 			console.error("Error fetching connections:", error);
 		}

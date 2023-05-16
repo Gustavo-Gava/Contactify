@@ -10,12 +10,10 @@ import { NameInputGroup } from "../AddNewContact/NameInputGroup";
 import { PhonesInputGroup } from "../AddNewContact/PhonesInputGroup";
 import { AddressesInputGroup } from "../AddNewContact/AddressesInputGroup";
 
-import { api } from "../../services/api";
-
 import { Contact } from "../../types/Contact";
 
 import { Button } from "../ui/Button";
-import { deleteContact } from "../../api/contact";
+import { deleteContact, updateContact } from "../../api/contact";
 
 import * as S from "./styles";
 
@@ -42,7 +40,7 @@ export const ContactInfo = ({ closeModal, refetchData, data }: ContactInfoProps)
 
 	async function onSubmit(formData: NewContactFormData) {
 		try {
-			await api.put(`/contacts/${data.id}`, formData);
+			await updateContact(data.id, formData);
 
 			toast.success("Contact updated successfully!");
 			refetchData();

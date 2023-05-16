@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface InputWrapperProps {
-	error?: boolean;
+	$error?: boolean;
 }
 
 export const Container = styled.div`
@@ -15,7 +15,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
 	display: flex;
 
 	border-bottom: 1px solid
-		${({ error, theme }) => (error ? theme.colors.actions.error : "#60606040")};
+		${({ $error, theme }) => ($error ? theme.colors.actions.error : "#60606040")};
 `;
 
 export const Label = styled.label`

@@ -14,6 +14,7 @@ export const Container = styled.button<ContainerProps>`
 	border: 1px solid transparent;
 
 	font-size: ${({ theme }) => theme.fonts.size.base};
+	font-weight: ${({ theme }) => theme.fonts.weight.medium};
 
 	background-color: ${({ theme, $action }) =>
 		$action === "danger"

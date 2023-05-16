@@ -59,11 +59,11 @@ export const Filters = ({ setFilter, refetch }: FiltersProps) => {
 			<S.Title>
 				Filters
 				<button onClick={toggleIsExpanded}>
-					<S.ChevronIcon isExpanded={isExpanded} />
+					<S.ChevronIcon $isExpanded={isExpanded} />
 				</button>
 			</S.Title>
 
-			<S.FilterContainer isExpanded={isExpanded} onSubmit={handleSubmit(onSubmit)}>
+			<S.FilterContainer $isExpanded={isExpanded} onSubmit={handleSubmit(onSubmit)}>
 				<S.FilterOptionWrapper>
 					<Input
 						label="How many address?"
