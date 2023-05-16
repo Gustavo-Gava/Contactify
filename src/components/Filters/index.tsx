@@ -34,10 +34,7 @@ export const Filters = ({ setFilter, refetch }: FiltersProps) => {
 
 	const toggleIsExpanded = () => setIsExpanded(!isExpanded);
 
-	console.log(errors);
-
 	function onSubmit(data: FormData) {
-		console.log(data);
 		const addressFilter = `addresses.length=${data.howManyAddress}`;
 		const phoneFilter = `phones.length=${data.howManyPhoneNumbers}`;
 		const filterArray = [addressFilter, phoneFilter];

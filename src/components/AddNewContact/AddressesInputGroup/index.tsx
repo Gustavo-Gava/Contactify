@@ -31,8 +31,6 @@ export const AddressesInputGroup = () => {
 								? errors?.addresses?.[index]?.message
 								: undefined;
 
-						console.log(atLeastOneFieldErrorMessage);
-
 						return (
 							<Fragment key={field.id}>
 								<Input

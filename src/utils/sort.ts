@@ -33,7 +33,5 @@ export const sortByGroup = (contacts: Contact[]) => {
 		innerSortedContacts[group].push(contact);
 	});
 
-	console.log(innerSortedContacts);
-
 	return innerSortedContacts;
 };

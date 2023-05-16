@@ -48,7 +48,7 @@ export const AddNewContact = ({ refetchData }: AddNewContactProps) => {
 			toast.success("Contact created successfully!");
 			setIsModalOpen(false);
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 
 			toast.error("Error creating contact!");
 		}

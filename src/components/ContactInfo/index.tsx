@@ -46,7 +46,7 @@ export const ContactInfo = ({ closeModal, refetchData, data }: ContactInfoProps)
 			refetchData();
 			closeModal();
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 			toast.error("Error updating contact!");
 		}
 	}
@@ -60,7 +60,7 @@ export const ContactInfo = ({ closeModal, refetchData, data }: ContactInfoProps)
 			closeModal();
 		} catch (err) {
 			toast.error("Error deleting contact!");
-			console.log(err);
+			console.error(err);
 		}
 	}
 
