@@ -1,7 +1,6 @@
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { BsPlus, BsTelephone } from "react-icons/bs";
 
-import { Input } from "../../ui/Input";
 import { NewContactFormData } from "..";
 
 import * as S from "../styles";
@@ -10,11 +9,8 @@ import { MaskedInput } from "../../ui/MaskedInput";
 export const PhonesInputGroup = () => {
 	const {
 		control,
-		register,
 		formState: { errors },
 	} = useFormContext<NewContactFormData>();
-
-	console.log("errors", errors);
 
 	const phones = useFieldArray({
 		control,

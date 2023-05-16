@@ -10,7 +10,10 @@ export const Container = styled.button<ContainerProps>`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 4px;
+	padding: 8px;
+	border: 1px solid transparent;
+
+	font-size: ${({ theme }) => theme.fonts.size.base};
 
 	background-color: ${({ theme, $action }) =>
 		$action === "danger"
@@ -19,5 +22,10 @@ export const Container = styled.button<ContainerProps>`
 			? theme.colors.actions.success
 			: theme.colors.primary.main};
 
-	border-radius: 4px;
+	border-radius: 6px;
+	transition: all 0.3s;
+
+	&:hover {
+		filter: brightness(0.9);
+	}
 `;

@@ -86,6 +86,8 @@ export const HeaderRow = styled.div`
 	}
 
 	.react-select-container {
+		padding: 4px;
+
 		svg {
 			background-color: ${({ theme }) => theme.colors.primary.main};
 			border-radius: 50%;
@@ -104,6 +106,11 @@ export const HeaderRow = styled.div`
 		.react-select__menu {
 			width: auto;
 			overflow: hidden;
+			background-color: ${({ theme }) => theme.colors.system.surface};
+
+			right: -5px;
+			border-radius: 6px;
+			padding: 4px 8px;
 		}
 	}
 `;

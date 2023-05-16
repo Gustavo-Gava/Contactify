@@ -1,7 +1,6 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 import * as S from "./styles";
 import { IoMdRemove } from "react-icons/io";
-import { useFormContext } from "react-hook-form";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string;
@@ -10,9 +9,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ removeFunction, name, error, ...rest }, ref) => {
+	({ removeFunction, name, error, label, ...rest }, ref) => {
 		return (
 			<S.Container>
+				{label && <S.Label htmlFor={name}>{label}</S.Label>}
+
 				<S.InputWrapper error={!!error}>
 					<S.Input name={name} ref={ref} {...rest} />
 

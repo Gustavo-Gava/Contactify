@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineSortAscending } from "react-icons/ai";
 import { BiSortDown } from "react-icons/bi";
@@ -21,6 +21,7 @@ import { Contact } from "../../types/Contact";
 import { centeredModalStyles } from "../../styles/global/commonStyles";
 import { ContactListLoading } from "../../components/ContactListLoading";
 import * as S from "./styles";
+import { Filters } from "../../components/Filters";
 
 const sortByLetter = (contacts: Contact[]) => {
 	const innerSortedContacts = {} as Record<string, Contact[]>;
@@ -62,12 +63,13 @@ const sortByGroup = (contacts: Contact[]) => {
 
 export const Home = () => {
 	const [search, setSearch] = useState("");
-	const [sortBy, setSortBy] = useState<"name" | "category">("category");
+	const [sortBy, setSortBy] = useState<"name" | "category">("name");
+	const [filter, setFilter] = useState<string[] | undefined>(undefined);
 	const [contactHighlighted, setContactHighlighted] = useState<Contact | null>(null);
 
 	const { isLoading, data, error, refetch } = useQuery({
 		queryKey: ["contacts"],
-		queryFn: () => api.get("/contacts?_sort=name&_order=asc"),
+		queryFn: () => api.get(`/contacts?_sort=name&_order=asc&${filter?.join("&")}`),
 	});
 
 	const filteredData = useMemo(() => {
@@ -81,6 +83,10 @@ export const Home = () => {
 
 		if (sortBy === "category") return sortByGroup(filteredData);
 	}, [filteredData, sortBy]);
+
+	useEffect(() => {
+		refetch();
+	}, [filter, refetch]);
 
 	if (error) return <p>Error</p>;
 
@@ -106,6 +112,8 @@ export const Home = () => {
 						onChange={(option) => setSortBy(option?.value as "name" | "category")}
 					/>
 				</S.HeaderRow>
+
+				<Filters setFilter={setFilter} refetch={refetch} />
 			</S.Header>
 
 			<S.Main>
