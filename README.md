@@ -4,8 +4,7 @@
 
 <h4 align="center"/> Aplicação de Contatos </p>
 
-![image](https://github.com/Gustavo-Gava/Contactify/assets/77810817/8dedb26a-9f86-4530-a255-0f715cb5f212)
-
+![image](https://github.com/Gustavo-Gava/Contactify/assets/77810817/68a42444-194e-4dce-b511-9edf4bf9765e)
 
 ## 📋 Tabela de conteúdos
 
