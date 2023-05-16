@@ -13,8 +13,8 @@ const theme = {
 		},
 
 		system: {
-			background: "#101010",
-			surface: "#303030",
+			background: "#080808",
+			surface: "#282828",
 		},
 
 		text: {

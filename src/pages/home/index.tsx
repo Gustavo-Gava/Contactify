@@ -1,5 +1,9 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { AiOutlineSortAscending } from "react-icons/ai";
+import { BiSortDown } from "react-icons/bi";
+import { CgSortAz } from "react-icons/cg";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import ReactSelect from "react-select";
 import ReactModal from "react-modal";
 
@@ -7,18 +11,16 @@ import { ContactInfo } from "../../components/ContactInfo";
 import { SearchInput } from "../../components/SearchInput";
 import { ContactCard } from "../../components/ContactCard";
 import { AddNewContact } from "../../components/AddNewContact";
+import ImportContactsFromGoogle from "../../components/google";
 
 import { api } from "../../services/api";
+import { CLIENT_ID } from "../../consts";
 
 import { Contact } from "../../types/Contact";
 
-import { AiOutlineSortAscending } from "react-icons/ai";
-import { BiSortDown } from "react-icons/bi";
-import { CgSortAz } from "react-icons/cg";
-
 import { centeredModalStyles } from "../../styles/global/commonStyles";
-import * as S from "./styles";
 import { ContactListLoading } from "../../components/ContactListLoading";
+import * as S from "./styles";
 
 const sortByLetter = (contacts: Contact[]) => {
 	const innerSortedContacts = {} as Record<string, Contact[]>;
@@ -92,9 +94,6 @@ export const Home = () => {
 				<S.HeaderRow>
 					<SearchInput value={search} setSearch={setSearch} />
 
-					{/* <BsFilterCircleFill size={28} /> */}
-					{/* <CgSortAz /> */}
-
 					<ReactSelect
 						options={[
 							{ value: "name", label: <AiOutlineSortAscending /> },
@@ -110,6 +109,12 @@ export const Home = () => {
 			</S.Header>
 
 			<S.Main>
+				{CLIENT_ID && (
+					<GoogleOAuthProvider clientId={CLIENT_ID}>
+						<ImportContactsFromGoogle refetch={refetch} />
+					</GoogleOAuthProvider>
+				)}
+
 				<S.ContactsWrapper>
 					{sortedContacts && (
 						<>

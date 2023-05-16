@@ -102,6 +102,7 @@ export const HeaderRow = styled.div`
 		}
 
 		.react-select__menu {
+			width: auto;
 			overflow: hidden;
 		}
 	}

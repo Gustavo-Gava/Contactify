@@ -6,7 +6,7 @@ module.exports = function () {
 	const data = { contacts: [] };
 
 	// Create 1000 users
-	for (let i = 0; i < 100; i++) {
+	for (let i = 0; i < 50; i++) {
 		const contact = {
 			id: i + 1,
 			name: faker.name.firstName(),
