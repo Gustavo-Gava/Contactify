@@ -60,6 +60,10 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body {
+    background-color: ${({ theme }) => theme.colors.system.background};
+  }
+
   button {
     cursor: pointer;
     display: inline-flex;
@@ -67,4 +71,4 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 0;
     background: transparent;
   }
-`
+`;
