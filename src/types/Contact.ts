@@ -1,24 +1,25 @@
 export interface Contact {
-  id: string;
-  name: string;
-  lastname: string;
-  picture: string;
+	id: string;
+	name: string;
+	lastname: string;
+	picture: string;
+	category: "family" | "friends" | "work";
 
-  phones: Phone[];
-  addresses: Address[];
+	phones: Phone[];
+	addresses: Address[];
 }
 
 export interface Phone {
-  id: string;
-  number: string;
-  type: string;
+	id: string;
+	number: string;
+	type: string;
 }
 
 export interface Address {
-  id: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
+	id: string;
+	street: string;
+	city: string;
+	state: string;
+	zip: string;
+	country: string;
 }
