@@ -38,12 +38,11 @@ Projeto desenvolvido para o processo seletivo de desenvolvedor pleno da VExpense
 
 <h3 id="tecnologias"> 📚 Tecnologias </h3>
 
-* React
-* Typescript
-* Styled-components
-* react-hook-form
-* yup
-* Miragejs
+* React e Typescript
+* styled-components
+* react-toastify e react-modal
+* react-hook-form e yup
+* json-server
 
 <h3 id="requisitos">🔧 Pré Requisitos</h3> 
 
