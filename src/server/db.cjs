@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 const { faker } = require("@faker-js/faker");
 
 module.exports = function () {
