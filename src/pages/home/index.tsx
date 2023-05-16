@@ -11,8 +11,10 @@ import { ContactInfo } from "../../components/ContactInfo";
 import { SearchInput } from "../../components/SearchInput";
 import { ContactCard } from "../../components/ContactCard";
 import { AddNewContact } from "../../components/AddNewContact";
+import { Filters } from "../../components/Filters";
 import ImportContactsFromGoogle from "../../components/Google/index.tsx";
 
+import { sortByGroup, sortByLetter } from "../../utils/sort.ts";
 import { api } from "../../services/api";
 import { CLIENT_ID } from "../../consts";
 
@@ -21,45 +23,6 @@ import { Contact } from "../../types/Contact";
 import { centeredModalStyles } from "../../styles/global/commonStyles";
 import { ContactListLoading } from "../../components/ContactListLoading";
 import * as S from "./styles";
-import { Filters } from "../../components/Filters";
-
-const sortByLetter = (contacts: Contact[]) => {
-	const innerSortedContacts = {} as Record<string, Contact[]>;
-
-	if (!contacts?.[0]) return innerSortedContacts;
-
-	contacts.forEach((contact: Contact) => {
-		const firstLetter = contact.name[0].toUpperCase();
-
-		if (!innerSortedContacts[firstLetter]) {
-			innerSortedContacts[firstLetter] = [];
-		}
-
-		innerSortedContacts[firstLetter].push(contact);
-	});
-
-	return innerSortedContacts;
-};
-
-const sortByGroup = (contacts: Contact[]) => {
-	const innerSortedContacts = {} as Record<string, Contact[]>;
-
-	if (!contacts?.[0]) return innerSortedContacts;
-
-	contacts.forEach((contact: Contact) => {
-		const group = contact.category;
-
-		if (!innerSortedContacts[group]) {
-			innerSortedContacts[group] = [];
-		}
-
-		innerSortedContacts[group].push(contact);
-	});
-
-	console.log(innerSortedContacts);
-
-	return innerSortedContacts;
-};
 
 export const Home = () => {
 	const [search, setSearch] = useState("");
