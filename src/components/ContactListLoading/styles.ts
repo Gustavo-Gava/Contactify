@@ -65,59 +65,56 @@ export const ContactsWrapper = styled.div`
 	box-shadow: ${({ theme }) => theme.shadows.lg};
 `;
 
-export const ContactsGroup = styled.div`
+export const SearchInputSkeleton = styled.div`
+	width: 100%;
+	height: 48px;
+	border-radius: 6px;
+
+	position: relative;
+	overflow: hidden;
+	background: linear-gradient(to right, #303030 0%, #101010 50%, #303030 100%);
+	background-size: 200% 100%;
+	animation: shimmer 2s infinite;
+`;
+
+export const ContactsGroupSkeleton = styled.div`
+	@keyframes shimmer {
+		0% {
+			background-position: -200% 0;
+		}
+
+		100% {
+			background-position: 200% 0;
+		}
+	}
+
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 	padding: 24px 12px;
 	border-radius: 6px;
+	height: 300px;
+
+	position: relative;
+	overflow: hidden;
+	background: linear-gradient(to right, #303030 0%, #101010 50%, #303030 100%);
+	background-size: 200% 100%;
+	animation: shimmer 2s infinite;
+
+	margin-bottom: 24px;
 
 	background-color: ${({ theme }) => theme.colors.system.surface};
 `;
 
-export const HeaderRow = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 16px;
+export const ContactsGroupSkeletonItem = styled.div`
+	width: 100%;
+	height: 48px;
+	background-color: ${({ theme }) => theme.colors.system.surface};
+	border-bottom: 1px solid #505050ee;
 
-	svg {
-		color: ${({ theme }) => theme.colors.primary.main};
-	}
-
-	.react-select-container {
-		svg {
-			background-color: ${({ theme }) => theme.colors.primary.main};
-			border-radius: 50%;
-			color: #fff;
-			width: 28px;
-			height: 28px;
-			padding: 4px;
-
-			margin-right: 2px;
-		}
-
-		.react-select__indicator {
-			display: none;
-		}
-
-		.react-select__menu {
-			overflow: hidden;
-		}
-	}
-`;
-
-export const Letter = styled.span`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 6px;
-	width: fit-content;
-	padding: 8px;
-
-	font-size: ${({ theme }) => theme.fonts.size.lg};
-	font-weight: ${({ theme }) => theme.fonts.weight.bold};
-	background-color: ${({ theme }) => theme.colors.primary.main};
-
-	margin: 10px 0;
+	position: relative;
+	overflow: hidden;
+	background: linear-gradient(to right, #303030 0%, #101010 50%, #303030 100%);
+	background-size: 200% 100%;
+	animation: shimmer 2s infinite;
 `;

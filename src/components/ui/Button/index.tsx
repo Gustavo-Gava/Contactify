@@ -3,8 +3,13 @@ import * as S from "./styles";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: string;
+	action?: "success" | "neutral" | "danger";
 }
 
-export const Button = ({ children, ...rest }: ButtonProps) => {
-	return <S.Container {...rest}>{children}</S.Container>;
+export const Button = ({ children, action = "neutral", ...rest }: ButtonProps) => {
+	return (
+		<S.Container {...rest} $action={action}>
+			{children}
+		</S.Container>
+	);
 };

@@ -1,13 +1,23 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const Container = styled.button`
-  width: 100%;
+interface ContainerProps {
+	$action: "success" | "neutral" | "danger";
+}
 
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4px;
-  background-color: ${({ theme }) => theme.colors.primary.main};
+export const Container = styled.button<ContainerProps>`
+	width: 100%;
 
-  border-radius: 4px;
-`
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	padding: 4px;
+
+	background-color: ${({ theme, $action }) =>
+		$action === "danger"
+			? theme.colors.actions.error
+			: $action === "success"
+			? theme.colors.actions.success
+			: theme.colors.primary.main};
+
+	border-radius: 4px;
+`;

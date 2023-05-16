@@ -14,9 +14,9 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<QueryProvider>
-				<Home />
-
 				<GlobalStyle />
+
+				<Home />
 
 				<ToastContainer />
 			</QueryProvider>
