@@ -1,10 +1,11 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { BsPlus, BsTelephone } from "react-icons/bs";
 
 import { Input } from "../../ui/Input";
 import { NewContactFormData } from "..";
 
 import * as S from "../styles";
+import { MaskedInput } from "../../ui/MaskedInput";
 
 export const PhonesInputGroup = () => {
 	const {
@@ -27,13 +28,17 @@ export const PhonesInputGroup = () => {
 
 				<S.InputWrapper>
 					{phones.fields.map((field, index) => (
-						<Input
+						<Controller
 							key={field.id}
-							placeholder={`Phone ${index + 1}`}
-							removeFunction={index !== 0 ? () => phones.remove(index) : undefined}
-							type="tel"
-							error={errors?.phones?.[index]?.number?.message}
-							{...register(`phones.${index}.number`)}
+							name={`phones.${index}.number`}
+							render={({ field }) => (
+								<MaskedInput
+									placeholder={`Phone ${index + 1}`}
+									removeFunction={index !== 0 ? () => phones.remove(index) : undefined}
+									error={errors?.phones?.[index]?.number?.message}
+									{...field}
+								/>
+							)}
 						/>
 					))}
 				</S.InputWrapper>

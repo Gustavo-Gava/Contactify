@@ -17,7 +17,21 @@ export const NameInputGroup = () => {
 			<S.InputGroupContent>
 				<BsPerson size={16} />
 
-				<Input label="name" placeholder="Name" error={errors.name?.message} {...register("name")} />
+				<S.InputWrapper>
+					<Input
+						label="name"
+						placeholder="Name"
+						error={errors.name?.message}
+						{...register("name")}
+					/>
+
+					<Input
+						label="category"
+						placeholder="Category"
+						error={errors.category?.message}
+						{...register("category")}
+					/>
+				</S.InputWrapper>
 			</S.InputGroupContent>
 		</S.InputGroup>
 	);

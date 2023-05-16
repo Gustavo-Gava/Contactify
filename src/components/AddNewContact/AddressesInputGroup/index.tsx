@@ -26,6 +26,13 @@ export const AddressesInputGroup = () => {
 
 				<S.InputWrapper>
 					{addresses.fields.map((field, index) => {
+						const atLeastOneFieldErrorMessage =
+							errors?.addresses?.[index]?.type === "atLeastOneChecked"
+								? errors?.addresses?.[index]?.message
+								: undefined;
+
+						console.log(atLeastOneFieldErrorMessage);
+
 						return (
 							<Fragment key={field.id}>
 								<Input
@@ -49,9 +56,14 @@ export const AddressesInputGroup = () => {
 
 								<Input
 									placeholder="Zipcode"
-									error={errors.addresses?.[index]?.zipcode?.message}
-									{...register(`addresses.${index}.zipcode`)}
+									error={errors.addresses?.[index]?.zip?.message ?? atLeastOneFieldErrorMessage}
+									{...register(`addresses.${index}.zip`)}
 								/>
+
+								{/* <S.ErrorMessage>
+									{errors?.addresses?.[index]?.type === "atLeastOneChecked" &&
+										"At least one address is required"}
+								</S.ErrorMessage> */}
 							</Fragment>
 						);
 					})}
@@ -61,7 +73,7 @@ export const AddressesInputGroup = () => {
 			<S.InputGroupFooter>
 				<S.AddPhoneButton
 					type="button"
-					onClick={() => addresses.append({ city: "", state: "", street: "", zipcode: "" })}
+					onClick={() => addresses.append({ city: "", state: "", street: "", zip: "" })}
 				>
 					<BsPlus size={16} />
 					Add address

@@ -1,16 +1,13 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { AddNewContactButton } from "./AddNewContactButton";
-import { Input } from "../ui/Input";
 import { Button } from "../ui/Button";
 
-import { api } from "../../services/api";
-
-import { BsPerson, BsX } from "react-icons/bs";
+import { BsX } from "react-icons/bs";
 
 import { toast } from "react-toastify";
 import { PhonesInputGroup } from "./PhonesInputGroup";
@@ -18,67 +15,56 @@ import { AddressesInputGroup } from "./AddressesInputGroup";
 
 import * as S from "./styles";
 import { NameInputGroup } from "./NameInputGroup";
+import { centeredModalStyles } from "../../styles/global/commonStyles";
+import { contactSchema } from "../../validation/contactSchema";
+import { createContact } from "../../api/contact/createContact";
 
-const schema = yup.object({
-	name: yup.string().required("Name is required"),
-	lastname: yup.string(),
-	category: yup.string(),
+export type NewContactFormData = yup.InferType<typeof contactSchema>;
 
-	phones: yup.array().of(
-		yup.object({
-			number: yup.string().required("Phone number is required"),
-			type: yup.string(),
-		})
-	),
+interface AddNewContactProps {
+	refetchData: () => void;
+}
 
-	addresses: yup.array().of(
-		yup.object({
-			street: yup.string(),
-			city: yup.string(),
-			state: yup.string(),
-			zipcode: yup.string(),
-		})
-	),
-});
-
-export type NewContactFormData = yup.InferType<typeof schema>;
-
-export const AddNewContact = () => {
+export const AddNewContact = ({ refetchData }: AddNewContactProps) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const methods = useForm<NewContactFormData>({
-		resolver: yupResolver(schema),
+		resolver: yupResolver(contactSchema),
 		defaultValues: {
 			phones: [{ number: "", type: "" }],
-			addresses: [{ street: "", city: "", state: "", zipcode: "" }],
+			category: "",
+			addresses: [{ street: "", city: "", state: "", zip: "" }],
 		},
 	});
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = methods;
+	const { handleSubmit } = methods;
 
 	const onSubmit = async (data: NewContactFormData) => {
 		try {
-			await api.post("/contacts", data);
+			await createContact(data);
 
+			refetchData();
+			methods.reset();
 			toast.success("Contact created successfully!");
 			setIsModalOpen(false);
 		} catch (err) {
 			console.log(err);
 
 			toast.error("Error creating contact!");
-			toast.info("Try again later");
 		}
 	};
 
+	function handleAddNewContact(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+		e.stopPropagation();
+
+		setIsModalOpen(!isModalOpen);
+	}
+
 	return (
 		<>
-			<AddNewContactButton onClick={() => setIsModalOpen(!isModalOpen)} />
+			<AddNewContactButton onClick={(e) => handleAddNewContact(e)} />
 
-			<Modal isOpen={isModalOpen} contentLabel="Modal" style={S.customStyles}>
+			<Modal isOpen={isModalOpen} contentLabel="Modal" style={centeredModalStyles}>
 				<FormProvider {...methods}>
 					<S.Form onSubmit={handleSubmit(onSubmit)}>
 						<S.FormHeader>
