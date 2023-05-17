@@ -24,8 +24,6 @@
 
 <h3 id="sobre">ℹ Sobre </h3>
 
-Projeto desenvolvido para o processo seletivo de desenvolvedor pleno da VExpenses.
-
 <h3 id="funcionalidades"> ✅ Funcionalidades </h3>
  
 - [x] CRUD de contatos;
